@@ -43,8 +43,8 @@ function mousePressed() {
   }
 }
 
-function mole(centerX , centerY, size){
-  circle(centerX + size*13, centerY - size*6, size*1)
+function mole(centerX, centerY, size) {
+  circle(centerX + size * 13, centerY - size * 6, size * 1);
 }
 
 function neck(centerX, centerY, size) {
@@ -153,8 +153,25 @@ function eyes(centerX, centerY, size) {
 }
 
 function hair(centerX, centerY, size) {
-  //hair
   fill(16, 23, 38);
+  // sideburns
+  let x1 = centerX - size * 40;
+  let y1 = centerY - size * 60;
+  let x2 = centerX - size * 33;
+  let y2 = centerY - size * 50;
+  let x3 = centerX - size * 53;
+  let y3 = centerY - size * 20;
+  triangle(x1, y1, x2, y2, x3, y3);
+  
+  let x21 = centerX + size * 40;
+  let y21 = centerY - size * 60;
+  let x22 = centerX + size * 33;
+  let y22 = centerY - size * 50;
+  let x23 = centerX + size * 53;
+  let y23 = centerY - size * 20;
+  triangle(x21, y21, x22, y22, x23, y23);
+
+  //hair
   let controlAx = centerX - size * 44;
   let controlAy = centerY - size * 45;
 
@@ -162,15 +179,11 @@ function hair(centerX, centerY, size) {
   let controlBy = centerY - size * 45;
 
   let anchorAx = centerX - size * 50;
-  let anchorAy = centerY - size * 100;
+  let anchorAy = centerY - size * 85;
 
   let anchorBx = centerX + size * 50;
-  let anchorBy = centerY - size * 100;
+  let anchorBy = centerY - size * 85;
 
-  //   ellipse(centerX - size*55, centerY - size*30, 10, 10)
-  //     ellipse(centerX + size*55, centerY - size*30, 10, 10)
-  //     ellipse(centerX - size*30, centerY - size*70, 10, 10)
-  //     ellipse(centerX + size*30, centerY - size*70, 10, 10)
   bezier(
     controlAx,
     controlAy,
@@ -253,16 +266,16 @@ function beard(centerX, centerY, size, weight) {
 
   // side burns
   for (let i = centerX - size * 50; i < centerX - size * 40; i += 3) {
-    line(i, beardStart + size * 1, i + 2, beardStart + size * 15);
+    line(i, beardStart + size * 1, i + 2, beardStart + size * 20);
   }
   for (let i = centerX - size * 55; i < centerX - size * 48; i += 3) {
-    line(i, beardStart - size * 10, i + 2, beardStart + size * 1);
+    line(i, beardStart - size * 10, i + 2, beardStart + size * 5);
   }
 
   for (let i = centerX + size * 40; i < centerX + size * 50; i += 3) {
-    line(i + 2, beardStart + size * 1, i, beardStart + size * 15);
+    line(i + 2, beardStart + size * 1, i, beardStart + size * 20);
   }
   for (let i = centerX + size * 48; i < centerX + size * 55; i += 3) {
-    line(i + 2, beardStart - size * 10, i, beardStart + size * 1);
+    line(i + 2, beardStart - size * 10, i, beardStart + size * 5);
   }
 }
