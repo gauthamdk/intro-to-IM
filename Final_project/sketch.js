@@ -16,7 +16,6 @@ let z = 0;
 let bg;
 let fence;
 let prevRow;
-let rowCount = 0;
 let sounds = [];
 let highscore;
 let heart = [];
@@ -47,7 +46,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1600, 1000);
+  createCanvas(2880, 1800);
   imageMode(CENTER);
 
   // get background bricks
@@ -124,15 +123,16 @@ function draw() {
     road.endScreen();
   } else {
     if (!road.gameDone()) {
-      if (frameCount % 50 == 0 && road.getSpeed() > 10) {
+      if (
+        (frameCount > 1000) & (frameCount % 100 == 0) &&
+        road.getSpeed() > 10
+      ) {
         road.reduceSpeed(1);
       }
 
-      if (frameCount % 50 == 0 && road.rate() > 30) {
+      if (frameCount > 1000 && frameCount % 100 == 0 && road.rate() > 30) {
         road.increaseRate(2);
       }
-
-      // print(generateRate, obstacleSpeed)
 
       if (frameCount % 100 == 0 && objectCount < 5) {
         objectCount++;
@@ -141,15 +141,10 @@ function draw() {
         let row = floor(random(3));
 
         if (row == prevRow) {
-          rowCount++;
-        }
-
-        if (row == prevRow && rowCount == 2) {
           row = (row + 1) % 3;
-          rowCount = 0;
         }
-
         prevRow = row;
+
         obstacles.push(
           new Obstacle(
             row,
@@ -299,10 +294,10 @@ class Tree {
 
   update() {
     if (!road.gameDone()) {
-      this.w += height / 9000;
+      this.w += width / 9000;
       this.h += height / 8000;
       this.y += height / abs(this.speed);
-      this.x -= width / (this.speed * width * 0.00414);
+      this.x -= width / (this.speed * width * 0.002);
     }
     this.draw();
   }
@@ -466,10 +461,10 @@ class Road {
 
   playBg() {
     this.sounds[0].setVolume(0.2);
-    if (!this.sounds[0].isPlaying()) {
-      this.sounds[0].loop();
-      this.sounds[0].play();
-    }
+    // if (!this.sounds[0].isPlaying()) {
+    //   this.sounds[0].loop();
+    //   this.sounds[0].play();
+    // }
   }
 
   update(movePlayer) {
@@ -494,8 +489,6 @@ class Road {
       circle(pLeftX, pY, 10);
       circle(pRightX, pY, 10);
 
-      console.log(this.player.getHitting());
-
       if (
         pLeftX >= obsLeftX &&
         pRightX <= obsRightX &&
@@ -503,12 +496,12 @@ class Road {
         !this.player.getHitting()
       ) {
         this.player.hit();
-         
-        if(this.player.getHealth() < 1){
+
+        if (this.player.getHealth() < 1) {
           road.setGameDone(true);
           player.setGameOver(true);
         }
-        
+
         this.sounds[1].setVolume(0.4);
         if (!this.sounds[1].isPlaying()) {
           this.sounds[1].play();
@@ -518,9 +511,8 @@ class Road {
       if (
         pLeftX >= obsLeftX &&
         pRightX <= obsRightX &&
-        (obsBottomY - pY) > height / 50
+        obsBottomY - pY > height / 50
       ) {
-        console.log("here");
         this.player.setHitting(false);
       }
 
@@ -536,7 +528,13 @@ class Road {
   }
 
   drawHeart(lives) {
-    image(heart[3 - lives], width * 0.9, height * 0.1);
+    image(
+      heart[3 - lives],
+      width * 0.9,
+      height * 0.1,
+      width * 0.15,
+      height * 0.2
+    );
   }
 
   draw() {
