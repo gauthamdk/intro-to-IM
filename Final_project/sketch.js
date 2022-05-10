@@ -40,7 +40,6 @@ function preload() {
   health = loadImage("assets/Heart.png");
 
   //sounds
-  //sounds
   soundtrack = loadSound("assets/soundtrack.mp3");
   injury = loadSound("assets/injury.mp3");
 }
@@ -319,7 +318,7 @@ class Road {
   }
 
   scoreboard() {
-    textSize(40);
+    textSize(80);
     fill(200);
     text(this.score, width * 0.5, height * 0.1);
   }
@@ -365,7 +364,7 @@ class Road {
     image(logo, width / 2, height / 2.8, width / 3, height / 2.5);
     rectMode(CENTER);
 
-    textSize(30);
+    textSize(80);
     textAlign(CENTER, CENTER);
     if (
       mouseX > width / 2 - width * 0.15 &&
@@ -404,7 +403,7 @@ class Road {
 
     text("Home", width / 2, height * 0.8);
     fill(200);
-    textSize(40);
+    textSize(80);
     text(this.score, width / 2, height * 0.45);
   }
 
@@ -461,10 +460,10 @@ class Road {
 
   playBg() {
     this.sounds[0].setVolume(0.2);
-    // if (!this.sounds[0].isPlaying()) {
-    //   this.sounds[0].loop();
-    //   this.sounds[0].play();
-    // }
+    if (!this.sounds[0].isPlaying()) {
+      this.sounds[0].loop();
+      this.sounds[0].play();
+    }
   }
 
   update(movePlayer) {
@@ -482,13 +481,6 @@ class Road {
       let obsRightX = obstacles[i].getRightX();
       let obsBottomY = obstacles[i].getBottomY();
 
-      fill(255);
-      circle(obsLeftX, obsBottomY, 10);
-      circle(obsRightX, obsBottomY, 10);
-
-      circle(pLeftX, pY, 10);
-      circle(pRightX, pY, 10);
-
       if (
         pLeftX >= obsLeftX &&
         pRightX <= obsRightX &&
@@ -502,7 +494,7 @@ class Road {
           player.setGameOver(true);
         }
 
-        this.sounds[1].setVolume(0.4);
+        this.sounds[1].setVolume(0.6);
         if (!this.sounds[1].isPlaying()) {
           this.sounds[1].play();
         }
@@ -619,6 +611,7 @@ function readSerial(data) {
     //////////////////////////////////
     //SEND TO ARDUINO HERE (handshake)
     //////////////////////////////////
+    console.log(leftMotor, rightMotor);
     let sendToArduino = leftMotor + "," + rightMotor + "\n";
     writeSerial(sendToArduino);
   }

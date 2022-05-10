@@ -6,7 +6,6 @@ class Player {
     this.step = 0;
     this.spriteW = width / 17;
     this.spriteH = height / 5;
-    this.hitCount = 0;
     this.gameOver = false;
     this.dyingFrame = false;
     this.vibrate = true;
@@ -29,25 +28,26 @@ class Player {
       }
     }
   }
-  
-  getHealth(){
+
+  getHealth() {
     return this.health;
   }
-  
-  hit(){
+
+  hit() {
     this.health--;
     this.hitting = true;
+    this.deadmotors();
   }
-  
-  resetLives(){
+
+  resetLives() {
     this.health = 3;
   }
-  
-  setHitting(val){
+
+  setHitting(val) {
     this.hitting = val;
   }
-  
-  getHitting(){
+
+  getHitting() {
     return this.hitting;
   }
 
@@ -68,22 +68,18 @@ class Player {
   }
 
   update() {
-    leftMotor = 0;
-    rightMotor = 0;
+    if (!this.hitting || frameCount % 300 == 0) {
+      leftMotor = 0;
+      rightMotor = 0;
+    }
 
     if (!this.gameOver) {
       if (this.x <= width * 0.13) {
         this.x = width * 0.13;
         leftMotor = 50;
-        print("left");
-        // this.hitCount++;
       } else if (this.x >= width * 0.87) {
         this.x = width * 0.87;
         rightMotor = 50;
-        print("right");
-        // this.hitCount++;
-      } else {
-        // this.hitCount = 0;
       }
     }
 
@@ -117,20 +113,11 @@ class Player {
   }
 
   moveX(x) {
-    // this.x += (x - this.x) * 0.2;
     this.x += x;
   }
 
   setX(x) {
     this.x = x;
-  }
-
-  getHitCount() {
-    return this.hitCount;
-  }
-
-  resetHitCount() {
-    this.hitCount = 0;
   }
 
   getLeftX() {
