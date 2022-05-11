@@ -318,8 +318,9 @@ class Road {
   }
 
   scoreboard() {
-    textSize(80);
-    fill(200);
+    textStyle(BOLD);
+    textSize(100);
+    fill(0);
     text(this.score, width * 0.5, height * 0.1);
   }
 
@@ -342,7 +343,7 @@ class Road {
       rect(width / 2, height / 2, width * 0.3, height * 0.08, 20);
       fill(18);
     }
-    textSize(30);
+    textSize(50);
     textAlign(CENTER, CENTER);
     text("Play", width / 2, height / 2);
     image(start1, width * 0.15, height * 0.25, width * 0.3, height * 0.4);
